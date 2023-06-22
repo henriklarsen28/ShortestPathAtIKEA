@@ -1,8 +1,11 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import sys
 import time
 import math
 from AStar import aStar
+from combinationList import allCombinations
+
 
 # Create an empty graph
 G = nx.Graph()
@@ -43,40 +46,43 @@ G.add_edge("Dining", "Kitchen", weight=1.4)
 G.add_edge("Entrance", "Exit", weight=1)
 
 
-startTime1 = time.time()
-for i in range(1000):
-    nx.astar_path(G, "Entrance", "Kitchen")
-endTime1 = time.time()
-
-print("A* algorithm: " + str(endTime1-startTime1))
-
-startTime2 = time.time()
-for i in range(1000):
-    nx.dijkstra_path(G, "Entrance", "Kitchen")
-endTime2 = time.time()
-
-print("Dijkstras algorithm: " + str(endTime2-startTime2))
-
-
-print(nx.astar_path_length(G, "Entrance", "Kitchen"))
-
 weight = {}
 
 #Converts graph to list for Astar algorithm
 converted_Graph = {}
 for node in G.nodes:
     weight[node] = (G.nodes[node]["weight"])
-    converted_Graph[node] = {neighbor: G.edges[node,neighbor]["weight"] for neighbor in G.neighbors(node)}
+    converted_Graph[node] = {neighbor: G.edges[node, neighbor]["weight"] for neighbor in G.neighbors(node)}
 
-startTime1 = time.time()
-for i in range(1000):
-    aStar(converted_Graph, weight, "Entrance", "Kitchen")
-endTime1 = time.time()
+#Starts at entrance and ends at exit
+source = "Entrance"
+dest = "Exit"
+listOfLocations = ["Entrance","Bathroom", "ChildrenRoom", "Exit"]
 
-print("My A* algorithm: " + str(endTime1-startTime1))
-print(aStar(converted_Graph, weight, "Entrance", "Kitchen"))
 
-print(weight)
+
+listOfCombinations = allCombinations(listOfLocations,source, dest)
+
+#Calculates the shortest path in IKEA with the categories above
+distance = sys.maxsize
+shortestPath = []
+for list in listOfCombinations:
+    length = 0
+    path = []
+    for i in range(0, len(list)-1):
+        print(list[i], list[i+1])
+        cost, pred = aStar(converted_Graph, weight, list[i],list[i+1])
+        length += cost
+        path += pred
+        print(length)
+    #Stores the shortest path
+    if length < distance:
+        distance = length
+        shortestPath = path
+print(path + [dest])
+print(round(distance,1))
+
+
 
 # Get positions of nodes
 pos = nx.get_node_attributes(G, 'pos')

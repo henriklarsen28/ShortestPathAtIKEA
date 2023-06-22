@@ -44,7 +44,8 @@ def aStar(graph, weight, src, dest):
                 heappush(min_heap, (node_data[i]["fn"], node_data[i]["cost"], i))
 
     #print("Shortest distance: " + str(node_data[dest]["cost"]))
-    return node_data[dest]["cost"]
     #print("Shorted path: " + str(node_data[dest]["pred"]))
+    return [node_data[dest]["cost"], node_data[dest]["pred"]]
+
 
 
