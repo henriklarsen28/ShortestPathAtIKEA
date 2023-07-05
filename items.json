@@ -1,0 +1,44 @@
+{"items": [
+    {
+    "section": "Livingroom",
+    "name" : "Kivik",
+    "type" : "sofa",
+    "price" : 3000,
+    "description" : "2 seater sofa"
+  },
+  {
+    "section": "Livingroom",
+    "name" : "Ektorp",
+    "type" : "sofa",
+    "price" : 6000,
+    "description" : "3 seater sofa"
+  },
+  {
+    "section": "LivingRoomStorage",
+    "name" : "Billy",
+    "type" : "bookcase",
+    "price" : 700,
+    "description" : "Bookcase 40x28x20cm"
+  },
+  {
+    "section": "LivingRoomStorage",
+    "name" : "Bestå",
+    "type" : "tv bench",
+    "price" : 2500,
+    "description" : "TV bench 120x42x64cm"
+  },
+  {
+    "section": "LivingRoomStorage",
+    "name" : "Hemnes",
+    "type" : "tv bench",
+    "price" : 2800,
+    "description" : "TV bench 148x47x57cm"
+  },
+  {
+    "section": "Dining",
+    "name" : "Henriksdal",
+    "type" : "chair",
+    "price" : 500,
+    "description" : "Chair with long cover",
+  }
+]}

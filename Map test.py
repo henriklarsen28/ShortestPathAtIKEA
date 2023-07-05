@@ -1,10 +1,11 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import sys
-import time
-import math
 from AStar import aStar
 from combinationList import allCombinations
+
+
+# Ikea item list
 
 
 # Create an empty graph
@@ -35,9 +36,6 @@ G.add_edge("Workspace", "Kitchen", weight=1.5)
 G.add_edge("Kitchen", "ChildrenRoom", weight=2)
 G.add_edge("ChildrenRoom", "Exit", weight=1.8)
 
-
-
-
 #Shortcut dining to workspace
 G.add_edge("Dining", "Workspace", weight=1)
 #Shortcut dining to kitchen
@@ -48,7 +46,7 @@ G.add_edge("Entrance", "Exit", weight=1)
 
 weight = {}
 
-#Converts graph to list for Astar algorithm
+#Converts graph to list of objects for Astar algorithm
 converted_Graph = {}
 for node in G.nodes:
     weight[node] = (G.nodes[node]["weight"])
@@ -57,30 +55,33 @@ for node in G.nodes:
 #Starts at entrance and ends at exit
 source = "Entrance"
 dest = "Exit"
-listOfLocations = ["Entrance","Bathroom", "ChildrenRoom", "Exit"]
+listOfLocations = ["Entrance","Bathroom", "ChildrenRoom", "Exit"]   # List of locations to visit
 
 
 
 listOfCombinations = allCombinations(listOfLocations,source, dest)
 
 #Calculates the shortest path in IKEA with the categories above
-distance = sys.maxsize
+length = sys.maxsize
 shortestPath = []
-for list in listOfCombinations:
-    length = 0
+
+for list in listOfCombinations: # Iterates through every permutations
+    currentLength = 0
     path = []
-    for i in range(0, len(list)-1):
-        print(list[i], list[i+1])
+    for i in range(0, len(list)-1): # Iterates through the list of a permutation
+        print(list[i], list[i+1])   # Prints the current node and the next node
         cost, pred = aStar(converted_Graph, weight, list[i],list[i+1])
-        length += cost
-        path += pred
-        print(length)
-    #Stores the shortest path
-    if length < distance:
-        distance = length
+        currentLength += cost   # Adds the cost of the current node to the total cost
+        path += pred            # Adds the path of the current node to the total path
+        print(currentLength)
+
+        #Stores the shortest path
+    if currentLength < length:   # Checks if the current path is shorter than the previous
+        length = currentLength
         shortestPath = path
+
 print(path + [dest])
-print(round(distance,1))
+print(round(length,1))
 
 
 
