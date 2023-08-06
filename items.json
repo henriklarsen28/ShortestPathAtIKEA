@@ -1,5 +1,5 @@
-{"items": [
-    {
+[
+{
     "section": "Livingroom",
     "name" : "Kivik",
     "type" : "sofa",
@@ -41,4 +41,4 @@
     "price" : 500,
     "description" : "Chair with long cover",
   }
-]}
+]
