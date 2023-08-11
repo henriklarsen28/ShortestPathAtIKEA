@@ -1,17 +1,28 @@
+import math
+
 import networkx as nx
 import matplotlib.pyplot as plt
 import sys
 from AStar import aStar
 from combinationList import allCombinations
 
-
+#Takes the coordinates of nodeA and nodeB accessed by using
+# pos = nx.get_node_attributes(G, 'pos')
+# print(pos["LivingRoom"])
+def euclideanDistance(pos,placeA, placeB):
+    nodeA = pos[placeA]
+    nodeB = pos[placeB]
+    x = nodeB[0] - nodeA[0]
+    y = nodeB[1] - nodeA[1]
+    distance = math.sqrt(math.pow(x, 2) + math.pow(y, 2))
+    print(f"The distance is {distance}")
 # Ikea item list
 
 
 # Create an empty graph
 G = nx.Graph()
 
-# Add nodes to the graph
+# Add nodes to the graph        # Weight on the node is the heuristic value
 G.add_node("Entrance", pos=(0.5, -0.5), weight=0)
 G.add_node("LivingRoom", pos=(-1, 1.5), weight=3.8)
 G.add_node("LivingRoomStorage", pos=(0.5, 2), weight=2.5)
@@ -82,11 +93,20 @@ G.add_edge("Entrance", "SelfServeHall", weight=1)
 weight = {}
 
 #Converts graph to list of objects for Astar algorithm
+
+# TODO: Will make a list of the weights for each node for every ending point in the list of locations
+pos = nx.get_node_attributes(G, 'pos')
 converted_Graph = {}
 for node in G.nodes:
-    weight[node] = G.nodes[node].get("weight",0)
+    print(node)
+    neighbors = {neighbor: G.edges[node,neighbor] for neighbor in G.neighbors(node)}
+    print(f"Neighbours: {neighbors}")
+    #weight[node] = {neighbor: G.edges[node,neighbor] for neighbor in G.neighbors(node)} euclideanDistance(pos,)
     converted_Graph[node] = {neighbor: G.edges[node, neighbor]["weight"] for neighbor in G.neighbors(node)}
 
+print("Weight:")
+print(weight)
+print(converted_Graph)
 #Starts at entrance and ends at exit
 source = "Entrance"
 dest = "Exit"
@@ -122,6 +142,7 @@ print(round(length,1))
 
 # Get positions of nodes
 pos = nx.get_node_attributes(G, 'pos')
+euclideanDistance(pos, "Entrance", "Workspace")
 
 # Draw the graph
 nx.draw(G, pos, with_labels=True, node_size=500, node_color='lightblue', font_size=10, edge_color='gray')
@@ -132,3 +153,5 @@ nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
 
 # Show the graph
 plt.show()
+
+
