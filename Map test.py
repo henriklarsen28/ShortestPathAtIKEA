@@ -3,7 +3,7 @@ import math
 import networkx as nx
 import matplotlib.pyplot as plt
 import sys
-from AStar import aStar
+from AStar import aStar, searchWeightDictionary
 from combinationList import allCombinations
 
 #Takes the coordinates of nodeA and nodeB accessed by using
@@ -93,56 +93,63 @@ G.add_edge("Entrance", "SelfServeHall", weight=1)
 
 weight = {}
 
-#Converts graph to list of objects for Astar algorithm
 
+# Initializes the weight for each node
 for node in G.nodes:
     weight[node] = []
 
-# TODO: Will make a list of the weights for each node for every ending point in the list of locations
+
+# Calculates the weight between each node
 pos = nx.get_node_attributes(G, 'pos')
 for node in G.nodes:
     for otherNode in G.nodes:
         if node is not otherNode:
             weight[node].append({otherNode: euclideanDistance(pos,node, otherNode)})
-print("Test:")
-print(weight["Entrance"])
+        else:
+            weight[node].append({otherNode: 0})
 
+#Converts graph to list of objects for Astar algorithm
 converted_Graph = {}
 for node in G.nodes:
-
     converted_Graph[node] = {neighbor: G.edges[node, neighbor]["weight"] for neighbor in G.neighbors(node)}
 
-print("Weight:")
-print(weight)
-#print(converted_Graph)
+
+
 #Starts at entrance and ends at exit
 source = "Entrance"
 dest = "Exit"
 listOfLocations = ["Entrance","Bathroom", "ChildrenRoom", "Exit"]   # List of locations to visit
 
-# TODO: Make method more efficient by finding the lowest weight of the list of locations and then only run the astar algorithm for that one
-
 listOfCombinations = allCombinations(listOfLocations,source, dest)
+
+fastestPermutation = []
+minWeight = sys.maxsize
+# Example of permutations "Entrance", "Bathroom", "ChildrenRoom", "Exit"
+
+for nodes in listOfCombinations:
+    currentWeight = 0
+    for i in range(0, len(nodes) - 2):  # Iterates through the list of a permutation, skips the last node since it is covered by i+1
+
+        # Finds the weight between the current node and the next node
+        weightNextNode = searchWeightDictionary(weight,nodes[i],nodes[i+1]) # The parameters are: Weight list, Current node, next node
+
+        currentWeight += weightNextNode
+
+    # Updates the minimum weight and the fastest permutation
+    if currentWeight < minWeight:
+        minWeight = currentWeight
+        fastestPermutation = nodes
 
 
 #Calculates the shortest path in IKEA with the categories above
-length = sys.maxsize
-shortestPath = []
+length = 0
+path = []
 
-for list in listOfCombinations: # Iterates through every permutations
-    currentLength = 0
-    path = []
-    for i in range(0, len(list)-1): # Iterates through the list of a permutation
-        print(list[i], list[i+1])   # Prints the current node and the next node
-        cost, pred = aStar(converted_Graph, weight, list[i],list[i+1])
-        currentLength += cost   # Adds the cost of the current node to the total cost
-        path += pred            # Adds the path of the current node to the total path
-        print(currentLength)
-
-        #Stores the shortest path
-    if currentLength < length:   # Checks if the current path is shorter than the previous
-        length = currentLength
-        shortestPath = path
+for i in range(0, len(fastestPermutation)-1): # Iterates through the list of a permutation
+    cost, pred = aStar(converted_Graph, weight, fastestPermutation[i],fastestPermutation[i+1])
+    length += cost          # Adds the cost of the current node to the total cost
+    path += pred            # Adds the path of the current node to the total path
+    #print(currentLength)
 
 print(path + [dest])
 print(round(length,1))

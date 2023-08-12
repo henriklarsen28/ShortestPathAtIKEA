@@ -6,5 +6,4 @@ def allCombinations(list, source, destination):
         if len(combo) == len(list) and str(combo[0]) == source and str(combo[len(list)-1]) == destination:
             result.append(combo)
 
-    print(result)
     return result
