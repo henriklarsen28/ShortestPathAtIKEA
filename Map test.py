@@ -15,7 +15,8 @@ def euclideanDistance(pos,placeA, placeB):
     x = nodeB[0] - nodeA[0]
     y = nodeB[1] - nodeA[1]
     distance = math.sqrt(math.pow(x, 2) + math.pow(y, 2))
-    print(f"The distance is {distance}")
+    return round(distance, 2)
+
 # Ikea item list
 
 
@@ -94,27 +95,35 @@ weight = {}
 
 #Converts graph to list of objects for Astar algorithm
 
+for node in G.nodes:
+    weight[node] = []
+
 # TODO: Will make a list of the weights for each node for every ending point in the list of locations
 pos = nx.get_node_attributes(G, 'pos')
+for node in G.nodes:
+    for otherNode in G.nodes:
+        if node is not otherNode:
+            weight[node].append({otherNode: euclideanDistance(pos,node, otherNode)})
+print("Test:")
+print(weight["Entrance"])
+
 converted_Graph = {}
 for node in G.nodes:
-    print(node)
-    neighbors = {neighbor: G.edges[node,neighbor] for neighbor in G.neighbors(node)}
-    print(f"Neighbours: {neighbors}")
-    #weight[node] = {neighbor: G.edges[node,neighbor] for neighbor in G.neighbors(node)} euclideanDistance(pos,)
+
     converted_Graph[node] = {neighbor: G.edges[node, neighbor]["weight"] for neighbor in G.neighbors(node)}
 
 print("Weight:")
 print(weight)
-print(converted_Graph)
+#print(converted_Graph)
 #Starts at entrance and ends at exit
 source = "Entrance"
 dest = "Exit"
 listOfLocations = ["Entrance","Bathroom", "ChildrenRoom", "Exit"]   # List of locations to visit
 
-
+# TODO: Make method more efficient by finding the lowest weight of the list of locations and then only run the astar algorithm for that one
 
 listOfCombinations = allCombinations(listOfLocations,source, dest)
+
 
 #Calculates the shortest path in IKEA with the categories above
 length = sys.maxsize
