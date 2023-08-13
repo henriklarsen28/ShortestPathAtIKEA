@@ -42,13 +42,27 @@ url_list = ["https://sik.search.blue.cdtapps.com/no/no/product-list-page?categor
 for url in url_list:
     response = requests.get("https://sik.search.blue.cdtapps.com/no/no/product-list-page?category=10412&size=24&c=lf&v=20220826&sort=RELEVANCE&zip=0375&sessionId=6109003e-64d6-4660-a561-c59ada6b5158&optimizelyUserId=60b37688-76ae-4ea6-b7fd-43aadba3db09")
 
-    json = response.json()
+    response_json = response.json()
 
-    data = json
-    productList = getProducts(data)
+    productList = getProducts(response_json)
 
     print(productList)
-    file = open("products.json", "w")
+
+
+    # Opens the file and writes the products to it
+    file = open("products.json", "r+",encoding="utf-8")
+
+    with open("products.json", "r+",encoding="utf-8") as file:
+        if len(file.read()) > 0:
+            json_data = json.load(file)
+            print(json_data)
+            #productList.append(json_data)
+
+    json_string = json.dumps(productList, ensure_ascii=False)
+    print(json_string)
+    file.write(json_string)
+
+
 
 
 

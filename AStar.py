@@ -26,7 +26,7 @@ def aStar(graph, weight, src, dest):
     while node_data[dest]["cost"] == inf:
 
         heapify(min_heap)
-        f , current_distance, current_node = heappop(min_heap)
+        f, current_distance, current_node = heappop(min_heap)
 
         #Adds node to visited list
         visited.append(current_node)
@@ -41,8 +41,7 @@ def aStar(graph, weight, src, dest):
                 cost = node_data[current_node]["cost"] + graph[current_node][i]
 
                 # Finds the weight between the current node and the next node
-                nextNode = next(item for item in weight[current_node] if i in item)
-                nextNodeWeight = nextNode[i]
+                nextNodeWeight = searchWeightDictionary(weight,current_node,i)
 
                 # Checks sum of distance and weight
                 fn = cost + nextNodeWeight
