@@ -3,13 +3,21 @@ import math
 import networkx as nx
 import matplotlib.pyplot as plt
 import sys
-from AStar import aStar, searchWeightDictionary
-from combinationList import allCombinations
+from AStar.aStar import aStar, searchWeightDictionary
+from itertools import permutations
 
 
 #Takes the coordinates of nodeA and nodeB accessed by using
 # pos = nx.get_node_attributes(G, 'pos')
 # print(pos["LivingRoom"])
+
+def allCombinations(list, source, destination):
+    result = []
+    for combo in permutations(list, len(list)):
+        if len(combo) == len(list) and str(combo[0]) == source and str(combo[len(list)-1]) == destination:
+            result.append(combo)
+
+    return result
 def euclideanDistance(pos,placeA, placeB):
     nodeA = pos[placeA]
     nodeB = pos[placeB]
@@ -18,7 +26,6 @@ def euclideanDistance(pos,placeA, placeB):
     distance = math.sqrt(math.pow(x, 2) + math.pow(y, 2))
     return round(distance, 2)
 
-# Ikea item list
 
 def makeGraph():
     # Create an empty graph

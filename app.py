@@ -2,8 +2,8 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 import json
-from mapTest import *
-import matplotlib.pyplot as plt
+from Graph.map import *
+
 
 def addToCart(item):
     for cartItem in st.session_state.cart:
@@ -25,9 +25,9 @@ def addToCart(item):
     }
     st.session_state.cart.append(newItem)
 
-def removeFromCart(item):
+def removeFromCart(removeItem):
     for item in st.session_state.cart:
-        if item["name"] == item["name"]:
+        if item["name"] == removeItem["name"]:
             item["amount"] -= 1
             item["total"] = item["amount"] * item["price"]
 
@@ -59,7 +59,7 @@ if "cart" not in st.session_state:
 
 
 # Read the json file
-file = open("products.json", "r",encoding="utf-8")
+file = open("Products/products.json", "r", encoding="utf-8")
 productList = file.read()
 jsonList = json.loads(productList)
 
