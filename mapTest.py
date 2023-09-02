@@ -6,6 +6,7 @@ import sys
 from AStar import aStar, searchWeightDictionary
 from combinationList import allCombinations
 
+
 #Takes the coordinates of nodeA and nodeB accessed by using
 # pos = nx.get_node_attributes(G, 'pos')
 # print(pos["LivingRoom"])
@@ -184,11 +185,11 @@ def aStarCalculations(G, source, dest, cart):
     for i in range(0, len(fastestPermutation)-1): # Iterates through the list of a permutation
         cost, pred = aStar(converted_Graph, weight, fastestPermutation[i],fastestPermutation[i+1])
         length += cost          # Adds the cost of the current node to the total cost
-        path += pred            # Adds the path of the current node to the total path
-        #print(currentLength)
+        path += pred
 
-    print(path + [dest])
-    print(round(length,1))
+    path.append(dest)
+
+    return path, round(length,1)*100 #The model is scaled to 100 meters per unit
 
 
 

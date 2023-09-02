@@ -1,3 +1,4 @@
+import numpy as np
 import streamlit as st
 import pandas as pd
 import json
@@ -75,7 +76,7 @@ with(col1):
 
 with(col2):
     st.subheader(jsonList[1]["name"])
-    st.markdown(f'<img src="{getImage(jsonList,7)}" alt="cat" width="350">', unsafe_allow_html=True)
+    st.markdown(f'<img src="{getImage(jsonList,1)}" alt="cat" width="350">', unsafe_allow_html=True)
     if st.button("Add to cart", key="1"):
         addToCart(jsonList[1])
     if(st.button("Remove from cart", key="remove1")):
@@ -96,11 +97,18 @@ st.table(data)
 # Calculate the fastest route send cart into maptest.py
 graph, G = makeGraph()
 if(st.button("Calculate fastest route", key="aStar")):
-    aStarCalculations(G, "Entrance", "Exit", st.session_state.cart)
+    path, length = aStarCalculations(G, "Entrance", "Exit", st.session_state.cart)
+
+    # Convert array to string and format it
+    path = np.asarray(path)
+    path = np.array2string(path,separator=" -> ")
+    path = path.replace("[","")
+    path = path.replace("]","")
+    path = path.replace("'","")
+
+    st.text(f"The fastest route is: {path}, and you will walk {length} meters")
 
 
 st.pyplot(graph)
 
 
-
-# Persist data from dataframe

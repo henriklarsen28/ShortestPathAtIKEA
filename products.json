@@ -1,0 +1,16 @@
+[
+  {"name": "BESTÅ", "price": 2685.0, "type": "Skjenker", "description": "Oppbevaring med dører 120x42x74 cm", "self_serve": true, "aile": 1, "bin": 1,
+    "image": "https://www.ikea.com/global/assets/range-categorisation/images/sideboards-buffets-10412.jpeg", "location": null
+  },
+  {"name": "KALLAX", "price": 2095.0, "type": "Skjenker", "description": "Hylle med 4 innsatser 77x147 cm", "self_serve": false, "aile": null, "bin": null,
+    "location": "Dining", "image": "https://www.ikea.com/no/no/images/products/kallax-hylle-hvit__0644753_pe702937_s5.jpg?f=s"
+  },
+  {"name": "HAVSTA", "price": 2595.0, "type": "Skjenker", "description": "Skap med sokkel 81x47x89 cm", "self_serve": true, "aile": 1, "bin": 2, "location": null},
+  {"name": "HAUGA", "price": 2495.0, "type": "Skjenker", "description": "Skjenk 140x84 cm", "self_serve": true, "aile": 3, "bin": 4, "location": null},
+  {"name": "IDANÄS", "price": 4495.0, "type": "Skjenker", "description": "Skjenk 124x50x95 cm", "self_serve": true, "aile": 1, "bin": 4, "location": null},
+  {"name":  "MARKUS", "price": 2995, "type":  "Kontorstol", "description": "Vissle mørk grå", "self_serve": true, "aile": 1, "bin": 3, "location": null},
+  {"name":  "ALEFJÄLL", "price": 2995, "type":  "Kontorstol", "decsription": "Glose svart", "self_serve": true, "aile": 3, "bin": 1, "location": null},
+  {"name":  "HEMNES", "price":  2995, "type":  "Seng", "description":  "Dagseng 3 skuffer, hvit", "self_serve":  true, "aile": 3, "bin": 3,
+    "image": "https://www.ikea.com/no/no/images/products/hemnes-dagseng-3-skuffer-hvit__1180454_pe896328_s5.jpg?f=s", "location": null
+  }
+]
